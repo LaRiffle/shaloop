@@ -51,4 +51,4 @@ jobs:
         black .
     - name: Run tests
       run: |
-        pytest test
+        pytest shaloop/test
