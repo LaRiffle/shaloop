@@ -25,54 +25,55 @@ def randbit(shape):
 
 import cProfile
 
-pr = cProfile.Profile()
-pr.enable()
 
-λ = 80
-n_values = 100_000
-x = randbit((2, λ, n_values))[0]
-# x = np.array([[                  16,                   13   ,                62],
-#  [16684085919135629008 , 3766798809093621433, 16281706966231673308]], dtype=np.uint64)
-# print(x)
-t = time.time()
-x = x.T
-x2 = x.view(dtype=dt1)
-x = x2["uint8"].reshape(*x.shape[:-1], -1)
-assert x.shape == (n_values, 2 * 8)
+def test_shaloop():
 
-# print(x)
-out = np.zeros((n_values, 32), dtype=np.uint8)
-out = sha_loop.sha256_loop_func(x, out)
-buffer = out.view(np.uint64).T
+    pr = cProfile.Profile()
+    pr.enable()
 
+    λ = 80
+    n_values = 100_000
+    x = randbit((2, λ, n_values))[0]
+    # x = np.array([[                  16,                   13   ,                62],
+    #  [16684085919135629008 , 3766798809093621433, 16281706966231673308]], dtype=np.uint64)
+    # print(x)
+    t = time.time()
+    x = x.T
+    x2 = x.view(dtype=dt1)
+    x = x2["uint8"].reshape(*x.shape[:-1], -1)
+    assert x.shape == (n_values, 2 * 8)
 
-buffer0, part0 = consume(buffer[0], λ - 64)
-part1 = buffer[1]
-part2 = buffer0 % 2
-buffer2, part3 = consume(buffer[2], λ - 64)
-part4 = buffer[3]
-part5 = buffer2 % 2
+    # print(x)
+    out = np.zeros((n_values, 32), dtype=np.uint8)
+    out = sha_loop.sha256_loop_func(x, out)
+    buffer = out.view(np.uint64).T
 
-valuebits = np.stack([part0, part1, part2, part3, part4, part5], axis=1)
+    buffer0, part0 = consume(buffer[0], λ - 64)
+    part1 = buffer[1]
+    part2 = buffer0 % 2
+    buffer2, part3 = consume(buffer[2], λ - 64)
+    part4 = buffer[3]
+    part5 = buffer2 % 2
 
-# print(valuebits.T)
+    valuebits = np.stack([part0, part1, part2, part3, part4, part5], axis=1)
 
-out = np.zeros((n_values, 32), dtype=np.uint8)
-out = sha_loop.sha256_loop_func(x, out)
-buffer = out.view(np.uint64).T
+    # print(valuebits.T)
 
+    out = np.zeros((n_values, 32), dtype=np.uint8)
+    out = sha_loop.sha256_loop_func(x, out)
+    buffer = out.view(np.uint64).T
 
-buffer0, part0 = consume(buffer[0], λ - 64)
-part1 = buffer[1]
-part2 = buffer0 % 2
-buffer2, part3 = consume(buffer[2], λ - 64)
-part4 = buffer[3]
-part5 = buffer2 % 2
+    buffer0, part0 = consume(buffer[0], λ - 64)
+    part1 = buffer[1]
+    part2 = buffer0 % 2
+    buffer2, part3 = consume(buffer[2], λ - 64)
+    part4 = buffer[3]
+    part5 = buffer2 % 2
 
-valuebits = np.stack([part0, part1, part2, part3, part4, part5], axis=1)
+    valuebits = np.stack([part0, part1, part2, part3, part4, part5], axis=1)
 
-# print(valuebits.T)
+    # print(valuebits.T)
 
-print(time.time() - t)
+    print(time.time() - t)
 
-# pr.print_stats()
+    # pr.print_stats()
