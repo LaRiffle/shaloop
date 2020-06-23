@@ -31,7 +31,7 @@ jobs:
       id: cache-reqs
       with:
         path: ~/.cache/pip
-        key: ${{ runner.os }}-python-${{ matrix.python-version }}-pip-${{ hashFiles('requirements.txt') }}
+        key: ${{ runner.os }}-python-${{ matrix.python-version }}-pip-${{ hashFiles('requirements*.txt') }}
     - name: Install Shaloop dependencies
       run: |
         sudo apt-get update
