@@ -74,7 +74,6 @@ class CMakeBuild(build_ext):
         subprocess.check_call(["cmake", "--build", "."] + build_args, cwd=self.build_temp)
 
 
-
 setup(
     name="shaloop",
     version=find_version(),
@@ -86,7 +85,7 @@ setup(
     long_description=read("README.md"),
     long_description_content_type="text/markdown",
     url="https://github.com/LaRiffle/shaloop",
-    #packages=setuptools.find_packages(include=["src", "src.*"]),
+    # packages=setuptools.find_packages(include=["src", "src.*"]),
     classifiers=[
         "Programming Language :: C++",
         "Programming Language :: Python :: 3",

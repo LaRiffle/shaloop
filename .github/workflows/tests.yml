@@ -6,11 +6,15 @@ on:
     - master
     paths:
     - '**.py'
+    - '**.txt'
+    - '**.md'
 
   pull_request:
     types: [opened, synchronize, reopened]
     paths:
     - '**.py'
+    - '**.txt'
+    - '**.md'
 
 jobs:
   python-tests:
