@@ -45,15 +45,10 @@ jobs:
         python setup.py install
     - name: Install build tools
       run: |
-        pip3 install flake8
-        #- pip3 install flake8-docstrings
-        pip3 install flake8-comprehensions
-        pip3 install pep8-naming
+        pip3 install black
     - name: Lint, format, and type-check
       run: |
-        # stop the build if there are Python syntax errors or undefined names
-        flake8 --config=.flake8 .
-        black --check .
+        black .
     - name: Run tests
       run: |
         pytest test
