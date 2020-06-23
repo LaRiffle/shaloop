@@ -102,4 +102,5 @@ setup(
             libraries=["ssl", "crypto"],
         )
     ],
+    zip_safe=False,
 )
