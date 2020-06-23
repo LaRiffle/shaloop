@@ -1,6 +1,6 @@
 # Shaloop 🚣‍
 
-C optimization to run SHA256 and SHA512 over numpy arrays
+C optimization to run SHA256 and SHA512 over numpy arrays.
 
 ### Build locally
 ```
