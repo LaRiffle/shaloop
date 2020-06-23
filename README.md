@@ -6,7 +6,7 @@ C optimization to run SHA256 and SHA512 over numpy arrays.
 ```
 python setup.py build_ext --inplace
 ```
-_Add the directory to your PYTHONPATH_
+Add the directory to your PYTHONPATH
 
 ### Test
 ```

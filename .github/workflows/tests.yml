@@ -45,7 +45,7 @@ jobs:
         python setup.py install
     - name: Install build tools
       run: |
-        pip3 install black
+        pip3 install black pytest
     - name: Lint, format, and type-check
       run: |
         black .
