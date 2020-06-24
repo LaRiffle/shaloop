@@ -74,6 +74,9 @@ class CMakeBuild(build_ext):
         subprocess.check_call(["cmake", "--build", "."] + build_args, cwd=self.build_temp)
 
 
+with open('requirements.txt') as f:
+    required = f.read().splitlines()
+
 setup(
     name="shaloop",
     version=find_version(),
@@ -92,6 +95,7 @@ setup(
         "Operating System :: OS Independent",
         "Topic :: Security :: Cryptography",
     ],
+    install_requires=required,
     cmdclass={"build_ext": build_ext},
     ext_modules=[
         Extension(
