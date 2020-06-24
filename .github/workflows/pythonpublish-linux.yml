@@ -36,7 +36,7 @@ jobs:
           TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
           TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
         run: |
-          apt-get install libssl-dev
+          yum install libssl-dev
           pip install -r requirements.txt
           LDFLAGS="-L/opt/lariffle/shaloop/openssl/lib" \
               CFLAGS="-I/opt/lariffle/shaloop/openssl/include -Wl,--exclude-libs,ALL" \
