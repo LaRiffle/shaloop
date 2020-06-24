@@ -95,7 +95,7 @@ setup(
         "Operating System :: OS Independent",
         "Topic :: Security :: Cryptography",
     ],
-    install_requires=required,
+    setup_requires=required,
     cmdclass={"build_ext": build_ext},
     ext_modules=[
         Extension(
