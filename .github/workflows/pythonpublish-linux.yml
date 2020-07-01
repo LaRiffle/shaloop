@@ -36,7 +36,9 @@ jobs:
           TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
           TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
         run: |
-          yum install libssl-devel
+          yum check-update
+          yum install redhat-rpm-config gcc libffi-devel python-devel \
+              openssl-devel
           pip install -r requirements.txt
           LDFLAGS="-L/opt/lariffle/shaloop/openssl/lib" \
               CFLAGS="-I/opt/lariffle/shaloop/openssl/include -Wl,--exclude-libs,ALL" \
