@@ -36,7 +36,11 @@ jobs:
           TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
           TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
         run: |
+          yum install libssl-devel
           pip install -r requirements.txt
+          LDFLAGS="-L/opt/lariffle/shaloop/openssl/lib" \
+              CFLAGS="-I/opt/lariffle/shaloop/openssl/include -Wl,--exclude-libs,ALL" \
+              pip wheel . -w dist/ --no-deps
           pip wheel . -w dist/ --no-deps
           auditwheel repair dist/*.whl --plat $AUDITWHEEL_PLAT
           twine upload --skip-existing wheelhouse/*

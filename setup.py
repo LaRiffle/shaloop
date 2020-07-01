@@ -1,5 +1,6 @@
 from setuptools import dist
-dist.Distribution().fetch_build_eggs(['Cython>=0.29', 'numpy>=1.19'])
+
+dist.Distribution().fetch_build_eggs(["Cython>=0.29", "numpy>=1.19"])
 
 import os
 import re
@@ -77,7 +78,7 @@ class CMakeBuild(build_ext):
         subprocess.check_call(["cmake", "--build", "."] + build_args, cwd=self.build_temp)
 
 
-with open('requirements.txt') as f:
+with open("requirements.txt") as f:
     required = f.read().splitlines()
 
 setup(
