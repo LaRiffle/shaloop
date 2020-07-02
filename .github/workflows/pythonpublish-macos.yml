@@ -26,8 +26,10 @@ jobs:
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
       run: |
         brew install openssl
-        xcode-select --install
-        ln -s /usr/local/opt/openssl/include/openssl /usr/local/include
+        echo 'export PATH="/usr/local/opt/openssl/bin:$PATH"' >> ~/.bash_profile
+        export LDFLAGS="-L/usr/local/opt/openssl/lib"
+        export CPPFLAGS="-I/usr/local/opt/openssl/include"
+        # ln -s /usr/local/opt/openssl/include/openssl /usr/local/include
         pip install -r requirements.txt
         # fetch third party libraries
         # git submodule init && git submodule update
