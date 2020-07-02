@@ -26,6 +26,7 @@ jobs:
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
       run: |
         brew install openssl
+        xcode-select --install
         ln -s /usr/local/opt/openssl/include/openssl /usr/local/include
         pip install -r requirements.txt
         # fetch third party libraries
