@@ -11,6 +11,7 @@ np.import_array()
 # cdefine the signature of our c function
 cdef extern from "sha_loop.h":
     void sha256_loop(unsigned char * buffer, int n_values, unsigned char * out)
+    void sha256_loop_parallel(unsigned char * buffer, int n_values, unsigned char * out, int n_threads)
     void sha512_loop(unsigned char * buffer, int n_values, unsigned char * out)
 
 
@@ -22,6 +23,20 @@ def sha256_loop_func(np.ndarray[unsigned char, ndim=2, mode="c"] in_array not No
         <unsigned char*> in_array.data,
         n_values,
         <unsigned char*> out.data,
+    )
+
+    return out
+
+
+def sha256_loop_parallel_func(np.ndarray[unsigned char, ndim=2, mode="c"] in_array not None, np.ndarray[unsigned char, ndim=2, mode="c"] out not None, int n_threads):
+    n_values = in_array.shape[0]
+    n_char = in_array.shape[1]
+
+    sha256_loop_parallel(
+        <unsigned char*> in_array.data,
+        n_values,
+        <unsigned char*> out.data,
+        n_threads
     )
 
     return out

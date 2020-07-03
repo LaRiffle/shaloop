@@ -77,3 +77,32 @@ def test_shaloop():
     print(time.time() - t)
 
     # pr.print_stats()
+
+def test_shaloop_parallel():
+    """ Simple time profiling."""
+
+    λ = 80
+    n_values = 10_000_000
+    x = randbit((2, λ, n_values))[0]
+    x = x.T
+    x2 = x.view(dtype=dt1)
+    x = x2["uint8"].reshape(*x.shape[:-1], -1)
+    assert x.shape == (n_values, 2 * 8)
+
+    # Original version
+    out = np.zeros((n_values, 32), dtype=np.uint8)
+    t1 = time.time()
+    out = sha_loop.sha256_loop_func(x, out)
+    print(f"Single threaded C time {time.time() - t1}")
+
+    # Parallelized version
+    out2 = np.zeros((n_values, 32), dtype=np.uint8)
+    n_threads = 8 
+    t2 = time.time()
+    out2 = sha_loop.sha256_loop_parallel_func(x, out2, n_threads)
+    print(f"Parallel C time with {n_threads} threads: {time.time() - t2}")
+
+    assert (out == out2).all()
+
+if __name__ == '__main__':
+    test_shaloop_parallel()
