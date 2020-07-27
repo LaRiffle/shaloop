@@ -21,7 +21,8 @@ def _as_usize(np_int):
 
 
 def _as_u8_array(np_u8_array):
-    return ffi.cast("unsigned  char *", np_u8_array.ctypes.data)
+    # return ffi.cast("unsigned  char *", np_u8_array.ctypes.data)
+    return ffi.cast("uint8_t *", np_u8_array.ctypes.data)
 
 
 def sha256_loop_func_sequential(np_input_array, np_output_array):
