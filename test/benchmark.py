@@ -54,12 +54,16 @@ def test_c(n_values):
     return o
 
 
+def save_c(n_values):
+    o = test_c(n_values)
+    np.savetxt(f"groundtruth-{n_values}.csv", o, delimiter=",", fmt="%03u")
+
+
 if __name__ == "__main__":
 
     for n_values in [1, 10, 1_000, 100_000, 1_000_000, 10_000_000, 100_000_000]:
-        print(f"n_values {n_values}")
+        print(f"Comparing speed for {n_values} values.")
         test_raw_rust(n_values)
         test_raw_parallel_rust(n_values, 4)
         test_raw_parallel_rust(n_values, 8)
         print()
-
