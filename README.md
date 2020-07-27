@@ -2,7 +2,13 @@
 
 Rust optimization to run SHA256 over Numpy arrays.
 
-## Development
+## Installation
+
+```bash
+pip install shalooprust
+```
+
+## Development instructions
 
 ### Build, install and test locally
 
@@ -26,31 +32,8 @@ If you have the old C version of Shaloop installed, you can run a benchmark with
 python test/benchmark.py
 ```
 
-### Deploy 
-
-Build for release:
+### Build and publish 
 
 ```bash
-docker run --rm -v $(pwd):/io konstin2/maturin build --release -b cffi --manylinux 2014
+docker run --rm -v $(pwd):/io konstin2/maturin publish -b cffi --manylinux 2010 -u __token__ -p pypi-your-token
 ```
-
-docker run --rm -v $(pwd):/io konstin2/maturin build --release -b cffi --manylinux 2014 -o dist
-
-If raises an error about some file not found:
-
-```
-docker run --rm -v $(pwd):/io konstin2/maturin build --release -b cffi --manylinux 2014 --no-sdist
-```
-
-Set .pypirc
-
-delete tar.gz (some issue)
-
-python3 -m twine upload --repository testpypi target/wheels/*
-
-
-- [ ] Numpy and CFFI dependencies.
-
-
-- [ ] Optimized Rustc compilation parameters.
-- [ ] Mac?

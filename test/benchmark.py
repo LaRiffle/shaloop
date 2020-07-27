@@ -1,4 +1,4 @@
-import shaloop
+import shalooprust as shaloop
 import numpy as np
 import time
 
@@ -66,4 +66,5 @@ if __name__ == "__main__":
         test_raw_rust(n_values)
         test_raw_parallel_rust(n_values, 4)
         test_raw_parallel_rust(n_values, 8)
+        test_c(n_values)
         print()

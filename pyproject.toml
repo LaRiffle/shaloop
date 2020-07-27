@@ -4,4 +4,4 @@ build-backend = "maturin"
 
 [tool.maturin]
 bindings = "cffi"
-manylinux = "2014"
+manylinux = "2010"
