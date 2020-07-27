@@ -105,7 +105,7 @@ setup(
         Extension(
             "sha_loop",
             sources=["src/_sha_loop.pyx", "src/sha_loop.c"],
-            include_dirs=[numpy.get_include(), "/usr/include/openssl"],
+            include_dirs=[numpy.get_include(), "/usr/include/openssl", "/usr/local/opt/openssl"],
             libraries=["ssl", "crypto"],
         )
     ],
