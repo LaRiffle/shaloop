@@ -1,17 +1,15 @@
 # Calling the Rust library through Maturin
-# from .shaloop import ffi
-# from .shaloop.lib import run_raw_hash as rust_run_raw_hash
-# from .shaloop.lib import run_raw_parallel_hash as rust_run_raw_parallel_hash
-
-
-import os
-from .ffi import ffi
-
-lib = ffi.dlopen(os.path.join(os.path.dirname(__file__), "native.so"), 4098)
-del os
+from .shaloop import ffi, lib
 
 rust_run_raw_hash = lib.run_raw_hash
 rust_run_raw_parallel_hash = lib.run_raw_parallel_hash
+
+# import os
+# from .ffi import ffi
+
+# lib = ffi.dlopen(os.path.join(os.path.dirname(__file__), "native.so"), 4098)
+# del os
+
 
 import numpy as np
 

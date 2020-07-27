@@ -1,0 +1,33 @@
+name: Linux Package
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  deploy:
+    strategy:
+      matrix:
+        python-version:
+          - cp36-cp36m
+          - cp37-cp37m
+          - cp38-cp38
+
+    runs-on: ubuntu-latest
+    container: konstin2/maturin
+
+    steps:
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install setuptools wheel twine auditwheel
+          pip install maturin
+      - name: Build with Maturin
+        run: |
+          maturin build --release -b cffi --manylinux 2014 --no-sdist
+      - name: Publish
+        env:
+          TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+          TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+        run: |
+          python -m twine upload target/wheels/*
