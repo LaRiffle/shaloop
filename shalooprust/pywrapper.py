@@ -3,7 +3,8 @@ from .shalooprust import ffi, lib
 
 rust_run_raw_hash = lib.run_raw_hash
 rust_run_raw_parallel_hash = lib.run_raw_parallel_hash
-
+rust_run_raw_hash_512 = lib.run_raw_hash_512
+rust_run_raw_parallel_hash_512 = lib.run_raw_parallel_hash_512
 # import os
 # from .ffi import ffi
 
@@ -46,6 +47,31 @@ def sha256_loop_func(np_input_array, np_output_array, np_n_threads=4):
 
     # Call rust
     rust_run_raw_parallel_hash(
+        rust_input_array, rust_output_array, rust_n_values, rust_n_threads
+    )
+    return
+
+def sha512_loop_func_sequential(np_input_array, np_output_array):
+    # Convert types
+    rust_input_array = _as_u8_array(np_input_array)
+    rust_output_array = _as_u8_array(np_output_array)
+    rust_n_values = _as_usize(np_input_array.shape[0])
+
+    # Call rust
+    rust_run_raw_hash_512(
+        rust_input_array, rust_output_array, rust_n_values,
+    )
+    return
+
+def sha512_loop_func(np_input_array, np_output_array, np_n_threads=4):
+    # Convert types
+    rust_input_array = _as_u8_array(np_input_array)
+    rust_output_array = _as_u8_array(np_output_array)
+    rust_n_values = _as_usize(np_input_array.shape[0])
+    rust_n_threads = _as_usize(np_n_threads)
+
+    # Call rust
+    rust_run_raw_parallel_hash_512(
         rust_input_array, rust_output_array, rust_n_values, rust_n_threads
     )
     return

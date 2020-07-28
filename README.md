@@ -26,6 +26,10 @@ The Python package is now installed. Note: clean your PYTHONPATH to remove the p
 python test/test_shaloop.py
 ```
 
+```bash
+python test/test_shaloop_512.py
+```
+
 If you have the old C version of Shaloop installed, you can run a benchmark with:
 
 ```bash 

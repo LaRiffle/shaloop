@@ -1,6 +1,6 @@
 [package]
 name = "shalooprust"
-version = "0.2.0-alpha.6"
+version = "0.2.0"
 authors = ["Pierre Tholoniat <pierre@tholoniat.com>"]
 edition = "2018"
 license = "Apache-2.0"

@@ -53,18 +53,39 @@ def test_c(n_values):
     # print(f"Output array after computation:\n {o}")
     return o
 
+def test_c_512(n_values):
+    np.random.seed(n_values)
+    i = np.random.randint(255, size=(n_values, 16)).astype("uint8")
+    o = np.zeros((n_values, 64), dtype=np.uint8)
+
+    # print(f"Input array:\n {i}")
+    # print(f"Initial output array:\n {o}")
+
+    t = time.time()
+    o = sha_loop.sha512_loop_func(i, o)
+    print(f"Sequential C time {time.time() - t}")
+
+    # print(f"Output array after computation:\n {o}")
+    return o
 
 def save_c(n_values):
     o = test_c(n_values)
     np.savetxt(f"groundtruth-{n_values}.csv", o, delimiter=",", fmt="%03u")
 
+def save_c_512(n_values):
+    o = test_c_512(n_values)
+    np.savetxt(f"groundtruth-512-{n_values}.csv", o, delimiter=",", fmt="%03u")
 
 if __name__ == "__main__":
 
-    for n_values in [1, 10, 1_000, 100_000, 1_000_000, 10_000_000, 100_000_000]:
+    for n_values in [1, 9, 1_002, 9_996, 100_015]:
+
+    # for n_values in [1, 10, 1_000, 100_000, 1_000_000, 10_000_000, 100_000_000]:
         print(f"Comparing speed for {n_values} values.")
-        test_raw_rust(n_values)
-        test_raw_parallel_rust(n_values, 4)
-        test_raw_parallel_rust(n_values, 8)
-        test_c(n_values)
-        print()
+        # test_raw_rust(n_values)
+        # test_raw_parallel_rust(n_values, 4)
+        # test_raw_parallel_rust(n_values, 8)
+        # test_c(n_values)
+        # print()
+        
+        save_c_512(n_values)
