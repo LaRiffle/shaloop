@@ -8,7 +8,7 @@ jobs:
   build:
     strategy:
       matrix:
-        platform: [ ubuntu-latest ] # macOS-10.14
+        platform: [ ubuntu-latest, macos-latest ]
     runs-on: ${{ matrix.platform }}
 
     steps:
