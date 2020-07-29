@@ -1,37 +1,45 @@
 name: Linux Package
-# Adapted from: https://hub.docker.com/r/konstin2/maturin/dockerfile
 
 on:
   release:
     types: [created]
 
 jobs:
-  deploy:
+  build:
     strategy:
       matrix:
-        python-version:
-          - cp36-cp36m
-          - cp37-cp37m
-          - cp38-cp38
-
-    runs-on: ubuntu-latest
-    container: quay.io/pypa/manylinux2010_x86_64
+        platform: [ ubuntu-latest ] # macOS-10.14
+    runs-on: ${{ matrix.platform }}
 
     steps:
-      - uses: actions/checkout@v1
+      - name: checkout
+        uses: actions/checkout@v1
+      - name: Setup Rust environment
+        uses: actions-rs/toolchain@v1
         with:
-          submodules: true
-      - name: Set path
+            profile: minimal
+            toolchain: stable
+            override: true
+      - name: Setup Python environment
+        uses: actions/setup-python@v1.1.1
+        with:
+          python-version: 3.7
+      - name: cargo test
         run: |
-          echo "::add-path::/opt/python/${{ matrix.python-version }}/bin"
-      - name: Install Rust
+          cargo test --release
+      - name: maturin build
         run: |
-          curl https://sh.rustup.rs -sSf | sh -s -- -y
-          source $HOME/.cargo/env
-          echo "::add-path::$HOME/.cargo/bin"
-      - name: Python packages
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install maturin
+          maturin build --release
+      - uses: actions/upload-artifact@v1
+        name: upload-wheel
+        with:
+          name: wheel-${{ matrix.platform }}
+          path: target/wheels/
+      - name: pip install fastrank
         run: |
-          python -m pip install --no-cache-dir cffi maturin
+          pip install target/wheels/fastrank-*.whl
       - name: Publish with Maturin
-        run: |
-          maturin publish -b cffi --interpreter --manylinux 2010 -u ${{ secrets.PYPI_USERNAME }} -p ${{ secrets.PYPI_PASSWORD }}
+        run: maturin publish -b cffi -u ${{ secrets.PYPI_USERNAME }} -p ${{ secrets.PYPI_PASSWORD }}
