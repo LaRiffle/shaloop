@@ -1,6 +1,6 @@
 [package]
-name = "shalooprust"
-version = "0.2.0"
+name = "shaloop"
+version = "0.2.1-alpha.1"
 authors = ["Pierre Tholoniat <pierre@tholoniat.com>"]
 edition = "2018"
 license = "Apache-2.0"
@@ -13,7 +13,7 @@ sha2 = "0.9.1"
 maturin = "0.8.2"
 
 [lib]
-name = "shalooprust"
+name = "shaloop"
 crate-type = ["cdylib"]
 
 [package.metadata.maturin]

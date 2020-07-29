@@ -1,5 +1,5 @@
 # Calling the Rust library through Maturin
-from .shalooprust import ffi, lib
+from .shaloop import ffi, lib
 
 rust_run_raw_hash = lib.run_raw_hash
 rust_run_raw_parallel_hash = lib.run_raw_parallel_hash

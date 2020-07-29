@@ -5,7 +5,7 @@ Rust optimization to run SHA256 over Numpy arrays.
 ## Installation
 
 ```bash
-pip install shalooprust
+pip install shaloop
 ```
 
 ## Development instructions

@@ -1,4 +1,5 @@
 name: Linux Package
+# Adapted from: https://hub.docker.com/r/konstin2/maturin/dockerfile
 
 on:
   release:
@@ -14,20 +15,23 @@ jobs:
           - cp38-cp38
 
     runs-on: ubuntu-latest
-    container: konstin2/maturin
+    container: quay.io/pypa/manylinux2010_x86_64
 
     steps:
-      - name: Install dependencies
+      - uses: actions/checkout@v1
+        with:
+          submodules: true
+      - name: Set path
         run: |
-          python3 -m pip install --upgrade pip
-          pip install setuptools wheel twine auditwheel
-          pip install maturin
-      - name: Build with Maturin
+          echo "::add-path::/opt/python/${{ matrix.python-version }}/bin"
+      - name: Install Rust
         run: |
-          maturin build --release -b cffi --manylinux 2014 --no-sdist
-      - name: Publish
-        env:
-          TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
-          TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+          curl https://sh.rustup.rs -sSf | sh -s -- -y
+          source $HOME/.cargo/env
+          echo "::add-path::$HOME/.cargo/bin"
+      - name: Python packages
         run: |
-          python -m twine upload target/wheels/*
+          python -m pip install --no-cache-dir cffi maturin
+      - name: Publish with Maturin
+        run: |
+          maturin publish -b cffi --interpreter --manylinux 2010 -u ${{ secrets.PYPI_USERNAME }} -p ${{ secrets.PYPI_PASSWORD }}

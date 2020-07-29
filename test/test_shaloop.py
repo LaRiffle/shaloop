@@ -1,4 +1,4 @@
-import shalooprust as shaloop
+import shaloop
 import numpy as np
 import os
 import time
