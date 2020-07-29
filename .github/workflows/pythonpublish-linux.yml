@@ -25,20 +25,12 @@ jobs:
         with:
           python-version: 3.7
       - name: cargo test
-        run: |
-          cargo test --release
+        run: | # --release
+          cargo test
       - name: maturin build
         run: |
           pip install --upgrade pip
           pip install --no-cache-dir cffi maturin
           maturin build --release
-      - uses: actions/upload-artifact@v1
-        name: upload-wheel
-        with:
-          name: wheel-${{ matrix.platform }}
-          path: target/wheels/
-      - name: pip install fastrank
-        run: |
-          pip install target/wheels/fastrank-*.whl
       - name: Publish with Maturin
         run: maturin publish -b cffi -u ${{ secrets.PYPI_USERNAME }} -p ${{ secrets.PYPI_PASSWORD }}
