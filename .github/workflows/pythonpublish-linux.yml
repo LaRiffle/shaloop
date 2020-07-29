@@ -30,8 +30,7 @@ jobs:
       - name: maturin build
         run: |
           pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install maturin
+          pip install --no-cache-dir cffi maturin
           maturin build --release
       - uses: actions/upload-artifact@v1
         name: upload-wheel
