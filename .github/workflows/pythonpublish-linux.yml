@@ -33,4 +33,4 @@ jobs:
           pip install --no-cache-dir cffi maturin
           maturin build --release
       - name: Publish with Maturin
-        run: maturin publish -b cffi --interpreter -u ${{ secrets.PYPI_USERNAME }} -p ${{ secrets.PYPI_PASSWORD }}
+        run: maturin publish -b cffi --no-dist -u ${{ secrets.PYPI_USERNAME }} -p ${{ secrets.PYPI_PASSWORD }}
