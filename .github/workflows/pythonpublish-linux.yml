@@ -1,4 +1,4 @@
-name: Linux Package
+name: Package & Publish
 
 on:
   release:
